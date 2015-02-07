@@ -1,6 +1,7 @@
 import sys
+from collections import OrderedDict
 
-def parse(inputData):
+def parseInput(inputData):
     cleanData = []
     for i in inputData:
         line = i.strip().strip('<').strip('>').strip('{').strip('}')
@@ -12,8 +13,22 @@ def parse(inputData):
         cleanData.append(transaction)
     return cleanData
 
+def parseMis(inputData):
+    items = OrderedDict()
+    count = 1
+    for i in inputData:
+        line = i.split('=')[-1].strip()
+        items[str(count)] = OrderedDict()
+        items[str(count)]['mis'] = float(line)
+        items[str(count)]['count'] = 0
+        count += 1
+    return items
+
 if __name__ == "__main__":
     f = open(sys.argv[1])
-    cleanData = parse(f.readlines())
+    cleanData = parseInput(f.readlines())
     f.close()
-    print cleanData
+    f = open(sys.argv[2])
+    items = parseMis(f.readlines())
+    f.close()
+    
