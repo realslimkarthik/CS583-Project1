@@ -70,7 +70,7 @@ def parseDataFile(dataFileName, misValueDictionary):
 				# sort items based on mis values
 				temp.sortItemSet()
 				# add itemset to a sequence
-				sequenceObject.elementList.append(temp)
+				sequenceObject.addItemSet(temp)
 			# append sequence to database 
 			database.sequenceList.append(sequenceObject)
 	# else throw IOError
@@ -80,22 +80,6 @@ def parseDataFile(dataFileName, misValueDictionary):
 	finally:
 		dataFile.close()
 	return database
-
-def generateItems(dataBase, misVals):
-	itemDictionary = OrderedDict()
-	for i in dataBase.sequenceList:															# iterate through each sequence in the database
-		for j in i.elementList:																# iterate through each itemset in a sequence
-			for k in j.itemList:															# iterate through each item in an itemset
-				if k not in itemDictionary:										# if item not added in the itemDictionary
-					itemDictionary[k] = {}									# initialize particular object for that key
-					itemDictionary[k]['actualSupport'] = 1
-					itemDictionary[k]['minimumSupport'] = misVals[k]
-				else:															# else if item present in itemDictionary
-					itemDictionary[k]['actualSupport'] += 1				# increment count of item in the database
-	#sort itemDictionary based on minimum support
-	itemDictionary = OrderedDict(sorted(itemDictionary.items(), key=lambda t: t[1]['minimumSupport']))
-	return itemDictionary
-
 
 # get string between <> or {}
 def getStringBetween( s, first, last ):

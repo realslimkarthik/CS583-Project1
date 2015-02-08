@@ -22,6 +22,13 @@ class ItemSet:
 	def isItemPresent(self,item):
 		return item in self.itemset
 
+	#check if itemSet is empty
+	def isEmpty(self):
+		if self.itemset:
+			return False
+		else:
+			return True
+
 	# sort items lexicographically
 	def sortItemSet(self):
 		self.itemset = sorted(self.itemset)

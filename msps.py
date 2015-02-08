@@ -15,9 +15,7 @@ def main(argv):
 	itemDictionary, supportDifferenceConstraint = util.parseMisFile(misFile)
 	# generate initial databse from file
 	initialDatabase = util.parseDataFile(dataFile,itemDictionary)
-	print initialDatabase.sequenceList
-	var = str(initialDatabase)
-	print '{25} = ',var.count('{25}')
+	print initialDatabase
 	# print goodbye note
 	print 'Bye!!'
 
