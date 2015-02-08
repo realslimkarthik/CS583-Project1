@@ -1,6 +1,6 @@
 TO-DOs:
 1.  write item as a nested dictionary
-2.  Modification of classes (@property)
-3.  function to generate item and calculate actual supports and output dictionary with frequent items (called in each branch of recursion)
-4.  function to generate projected database. Args -> oldDB, item
-5.  
+2.  function to generate item and calculate actual supports and output dictionary with frequent items (called in each branch of recursion) - Output as an ordereddict
+3.  Modification of classes (@property)
+4.  function to generate projected database. Args -> oldDB, item (r-PrefixSpan)
+5.  In each call of the recursion, remove previous level frequent item (ik) and all items j where |support(j) - support(ik)| > SDC
