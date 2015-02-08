@@ -24,7 +24,7 @@ def parseMis(inputData):
         count += 1
     return items
 
-def generateItems(dataBase, misVals):
+def generateItems(dataBase, misVals=[]):
     itemDictionary = OrderedDict()
     present = {}
     for i in dataBase:                                                        # iterate through each sequence in the database
@@ -34,13 +34,15 @@ def generateItems(dataBase, misVals):
                     if k not in itemDictionary:                                    # if item not added in the itemDictionary
                         itemDictionary[k] = {}                                    # initialize particular object for that key
                         itemDictionary[k]['actualSupport'] = 1
-                        itemDictionary[k]['minimumSupport'] = misVals[k - 1]
+                        if len(misVals) != 0:
+                            itemDictionary[k]['minimumSupport'] = misVals[k - 1]
                     else:                                                        # else if item present in itemDictionary
                         itemDictionary[k]['actualSupport'] += 1                    # increment count of item in the database
                     present[k] = True
         present = {}
     #sort itemDictionary based on minimum support
-    itemDictionary = OrderedDict(sorted(itemDictionary.items(), key=lambda t: t[1]['minimumSupport']))
+    if len(misVals) != 0:
+        itemDictionary = OrderedDict(sorted(itemDictionary.items(), key=lambda t: t[1]['minimumSupport']))
     return itemDictionary
 
 def frequentItems(dataBase, itemDictionary):
@@ -63,26 +65,25 @@ def generateDatabase(dataBase, item, itemDictionary, SDC=0):
     for i in dataBase:
         for j in i:
             for k in j:
-                flag = (item == k)
+                flag = (k == item)
                 if flag == True:
                     newDb.append(i)
                     break
             if flag == True:
                 break
+        flag = False
     if SDC != 0:
-        blacklistItems = []
         for i in newDb:
             for j in i:
                 for k in j:
                     if abs(itemDictionary[k]['actualSupport'] - itemDictionary[item]['actualSupport']) > 0:
-                        blacklistItems.append(k)
-                for k in blacklistItems:
-                    j.remove(k)
-                blacklistItems = []
+                        j.remove(k)
     return newDb
 
 def rPrefixSpan(item, dataBase, count):
+    # print dataBase
     itemDictionary = generateItems(dataBase)
+    print itemDictionary
 
 if __name__ == "__main__":
     f = open(sys.argv[1])
@@ -100,7 +101,7 @@ if __name__ == "__main__":
     # for (key, val) in newItemDict.items():
     #     print str(key) + ' ' + str(val['actualSupport']) + ' ' + str(val['minimumSupport'])
     # newDb = generateDatabase(dataBase, 45, itemDictionary, SDC)
-    print newDb
+    # print newDb
     for (key, val) in newItemDict.items():
         newDb = generateDatabase(dataBase, key, itemDictionary, SDC)
         rPrefixSpan(key, newDb, len(newDb))
