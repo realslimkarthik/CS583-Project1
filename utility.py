@@ -63,9 +63,10 @@ def parseDataFile(dataFileName, misValueDictionary):
 			for itemset in itemsetStrings:
 				tokens = itemset.split(',')
 				intValues = [int(x) for x in tokens]
-				temp = element.ItemSet(0,0)
+				# create a new ItemSet object
+				temp = element.ItemSet()
 				# add items and mis into itemset
-				[temp.addItem(item.Item(x,misValueDictionary[x],0)) for x in intValues]
+				[temp.addItem(item.Item(x,misValueDictionary[x])) for x in intValues]
 				# sort items based on mis values
 				temp.sortItemSet()
 				# add itemset to a sequence

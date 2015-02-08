@@ -1,35 +1,35 @@
 #import required modules
-from collections import OrderedDict
 import item
-
-#ItemSet class holds dictionary of items and their mis 
-#sorted in ascending order of mis values
+#ItemSet class holds set of item objects
 class ItemSet:
 	# initializer
-	def __init__(self,minimumSupport,actualSupport):
-		self.itemList = OrderedDict()
-		self.minimumSupport = minimumSupport
-		self.actualSupport = actualSupport
-	# function to add item to the ordered dictionary
+	def __init__(self):
+		self.itemset = set()
+
+	# function to add item to the set
 	def addItem(self,item):
-		self.itemList[item.name] = item
-	# function to sort items based on mis
+		self.itemset.add(item)
+
+	# function to remove element from set
+	def removeItem(self,item):
+		self.itemset.remove(item)
+
+	# check existence of itemList
+	def isListPresent(self,itemList):
+		return self.itemset.isSubset(itemList)
+
+	# check if element exists
+	def isItemPresent(self,item):
+		return item in self.itemset
+
+	# sort items lexicographically
 	def sortItemSet(self):
-		self.itemList = OrderedDict(sorted(self.itemList.items(), key=lambda t: t[1].minimumSupport))
-	# check to see if actual supp > minsupp
-	def isfrequent(self):
-		if self.actualSupport > self.minimumSupport: 
-			return True
-		else: 
-			return False
-	# check for supportDifferenceConstraint
-	# def employsupportDifferenceConstraint(self,supportDifferenceConstraint):
-	# 	for value in self.itemList:
+		self.itemset = sorted(self.itemset)
 
 	# string format of itemset
-	# each item set is enclosed by {} and values(keys) seperated by ,
+	# each itemset is enclosed by {} and values(keys) seperated by ,
 	def __str__(self):
 		outStr = []
-		for value in list(self.itemList.keys()):
+		for value in self.itemset:
 			outStr.append(str(value))
 		return '{' + ','.join(outStr) + '}'
