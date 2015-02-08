@@ -80,6 +80,22 @@ def parseDataFile(dataFileName, misValueDictionary):
 		dataFile.close()
 	return database
 
+def generateItems(dataBase, misVals):
+	itemDictionary = OrderedDict()
+	for i in dataBase:															# iterate through each sequence in the database
+		for j in i:																# iterate through each itemset in a sequence
+			for k in j:															# iterate through each item in an itemset
+				if k not in itemDictionary:										# if item not added in the itemDictionary
+					itemDictionary[str(k)] = {}									# initialize particular object for that key
+					itemDictionary[str(k)]['actualSupport'] = 1
+					itemDictionary[str(k)]['minimumSupport'] = misVals[k]
+				else:															# else if item present in itemDictionary
+					itemDictionary[str(k)]['actualSupport'] += 1				# increment count of item in the database
+	#sort itemDictionary based on minimum support
+	itemDictionary = OrderedDict(sorted(itemDictionary.itemDictionary(), key=lambda t: t['minimumSupport']))
+	return itemDictionary
+
+
 # get string between <> or {}
 def getStringBetween( s, first, last ):
     try:
