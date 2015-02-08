@@ -82,17 +82,17 @@ def parseDataFile(dataFileName, misValueDictionary):
 
 def generateItems(dataBase, misVals):
 	itemDictionary = OrderedDict()
-	for i in dataBase:															# iterate through each sequence in the database
-		for j in i:																# iterate through each itemset in a sequence
-			for k in j:															# iterate through each item in an itemset
+	for i in dataBase.sequenceList:															# iterate through each sequence in the database
+		for j in i.elementList:																# iterate through each itemset in a sequence
+			for k in j.itemList:															# iterate through each item in an itemset
 				if k not in itemDictionary:										# if item not added in the itemDictionary
-					itemDictionary[str(k)] = {}									# initialize particular object for that key
-					itemDictionary[str(k)]['actualSupport'] = 1
-					itemDictionary[str(k)]['minimumSupport'] = misVals[k]
+					itemDictionary[k] = {}									# initialize particular object for that key
+					itemDictionary[k]['actualSupport'] = 1
+					itemDictionary[k]['minimumSupport'] = misVals[k]
 				else:															# else if item present in itemDictionary
-					itemDictionary[str(k)]['actualSupport'] += 1				# increment count of item in the database
+					itemDictionary[k]['actualSupport'] += 1				# increment count of item in the database
 	#sort itemDictionary based on minimum support
-	itemDictionary = OrderedDict(sorted(itemDictionary.itemDictionary(), key=lambda t: t['minimumSupport']))
+	itemDictionary = OrderedDict(sorted(itemDictionary.items(), key=lambda t: t[1]['minimumSupport']))
 	return itemDictionary
 
 
