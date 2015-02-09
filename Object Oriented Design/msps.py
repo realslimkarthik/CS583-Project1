@@ -1,8 +1,5 @@
 #import required modules
 import sys,getopt as options
-import itemset as element
-import sequence as seq
-import database as db
 import utility as util
 
 # main function definition
@@ -12,11 +9,21 @@ def main(argv):
 	# read arguments and load files
 	dataFile, misFile = readArguments(argv)
 	# load data from file into memory
-	itemDictionary, supportDifferenceConstraint = util.parseMisFile(misFile)
+	itemList, supportDifferenceConstraint = util.parseMisFile(misFile)
 	# generate initial databse from file
-	initialDatabase = util.parseDataFile(dataFile,itemDictionary)
-	print initialDatabase
+	initialDatabase = util.parseDataFile(dataFile,itemList)
+	# generate actual supports for all items
+	# also generate frequent items and sort
+	itemList, frequentItems = util.getFrequentItems(itemList,initialDatabase)
+	frequentItems.itemset = sorted(frequentItems.itemset,key=lambda x: x.minimumSupport)
+	
+	
+	# for x in frequentItems:
+		# for each item in frequentItems call 
+		# call r prefixspan 
+	# print frequent patterns to file
 	# print goodbye note
+
 	print 'Bye!!'
 
 # function to read files from disk 

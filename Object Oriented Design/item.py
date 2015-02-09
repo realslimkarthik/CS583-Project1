@@ -7,25 +7,25 @@ class Item:
 		self.minimumSupport = minimumSupport
 		self.actualSupport = actualSupport
 
-	# check to see if actual supp > minsupp
-	def isfrequent(self):
-		if self.actualSupport > self.minimumSupport: 
+	# check to see if actual support > minsupp
+	def isFrequent(self):
+		if self.actualSupport >= self.minimumSupport: 
 			return True
 		else: 
 			return False
 
 	# display item details 
 	def printItemDetails(self):
-		print name + ' mis: ' + minimumSupport + ' supp: ' + actualSupport
+		print str(self.name) + ' mis: ' + str(self.minimumSupport) + ' supp: ' + str(self.actualSupport)
 		
-	# check for equality of item objects
-	def __eq__(self, other): 
-		return self.name == other.name
+	# hash for set
+	def __hash__(self):
+		return self.name * 2 
 
+	#eq for object
+	def __eq__(self,other):
+		return self.name == other.name
+	
 	# return name as string for printing object
 	def __str__(self):
 		return str(self.name)
-
-	# define hash to use woth sets
-	def __hash__(self):
-		return hash(self.name) * hash(self.minimumSupport)
